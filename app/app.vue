@@ -1,46 +1,60 @@
-<script>
-import {defineNuxtComponent} from "#app"
+<script setup>
+import { computed, ref } from 'vue'
 
-export default defineNuxtComponent({
-  data: () => ({
-    photoGallery: []
-  }),
-  computed: {
-    numberOfPhotos(){
-      return this.photoGallery.length
-    },
-    evenAlbums(){
-      return this.photoGallery.filter(item => item.albumId % 2 === 0)
-    },
-    oddAlbums(){
-      return this.photoGallery.filter(item => !(item.albumId % 2 === 0))
-    },
-    evenAlbumPercentage(){
-      return this.evenAlbums.length / this.numberOfPhotos
-    }
-  },
-  methods: {
-    fetchPhotoGallery(){
-      fetch('https://jsonplaceholder.typicode.com/photos') 
-      .then(response => response.json())
-        .then(json => {
-          this.photoGallery = json
-        })
-    }
-  }
+let todoList = ref([])
+
+const completedItems = computed(() => {
+  return todoList.value.filter(item => item.completed)
+}) 
+
+const remainingItems = computed(() => {
+  return todoList.value.filter(item => !item.completed)
 })
+
+function fetchToDoList() {
+  fetch('https://jsonplaceholder.typicode.com/todos')
+    .then(response => response.json())
+    .then(json => {
+      todoList.value = json
+    })
+}
 </script>
 
 <template>
-  <h1>Photo Gallery</h1>
-  <button @click="fetchPhotoGallery">Fetch Data</button>
-  <p>{{ numberOfPhotos }} photos ({{ oddAlbums.length }} odd albums | {{ evenAlbums.length }} even albums)</p>
-  <ul>
-    <li v-for="photo in photoGallery" :key="`photo-id-${photo.id}`">
-      <img :src="photo.thumbnailUrl" />
-    </li>
-  </ul>
+  <div class="section">
+    <img src="/todo.jpg" alt="Todo photo by Glenn Casterns-Peters" />
+    <p>
+      Photo by <a href="https://unsplash.com/@glenncarstenspeters?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Glenn Carstens-Peters</a> on <a href="https://unsplash.com/photos/person-writing-bucket-list-on-book-RLw-UC03Gwc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+    </p>
+    <h1 class="title">Hello world!</h1>
+    <button @click="fetchToDoList">Fetch Data</button>
+
+    <p>{{ completedItems.length }} completed | {{ remainingItems.length }} remaining</p>
+
+    <ul class="list">
+      <li v-for="todo in todoList" :key="`todo-id-${todo.id}`">
+        <input type="checkbox" :checked="todo.completed"> {{ todo.title }}
+      </li>
+    </ul>
+  </div>
 </template>
 
-<style></style>
+<style lang="scss">
+@use './node_modules/bulma/bulma.scss' as *;
+@use '@/assets/styles/main.scss' as *;
 
+// If you're not using scoped styles, just use class names directly.
+:root {
+  --text-color: #{$textColor};  // Ensure `$textColor` is defined in main.scss
+}
+
+.heading {
+  color: var(--text-color);
+}
+
+.list {
+  color: var(--text-color);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+</style>
