@@ -16,11 +16,9 @@
           <NuxtLink to="/display" class="navbar-link"> Display </NuxtLink>
 
           <div class="navbar-dropdown">
-            <a class="navbar-item"> About </a>
-            <a class="navbar-item"> Jobs </a>
-            <a class="navbar-item"> Contact </a>
-            <hr class="navbar-divider" />
-            <a class="navbar-item"> Report an issue </a>
+            <NuxtLink to="/display/todos" class="navbar-link"> To Dos </NuxtLink>
+            <NuxtLink to="/display/todos?completed=true" class="navbar-link"> Completed To Dos </NuxtLink>
+            <NuxtLink to="/display/photos" class="navbar-link"> Photos </NuxtLink>
           </div>
         </div>
       </div>
