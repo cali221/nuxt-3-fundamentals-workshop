@@ -1,11 +1,13 @@
 <script setup></script>
 
 <template>
-  <div class="container">
-    <div class="section">
-      <h1>Display</h1>
+  <NuxtLayout name="display">
+    <div class="container">
+      <div class="section">
+        <h1>Display</h1>
+      </div>
     </div>
-  </div>
+  </NuxtLayout>
 </template>
 
 <style lang="scss"></style>
