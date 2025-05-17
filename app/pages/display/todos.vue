@@ -23,6 +23,7 @@ const remainingItems = computed(() => {
 </script>
 
 <template>
+  <NuxtLayout name="todo">
   <div class="section">
     <h1 class="title">Todo Viewer</h1>
     <NuxtPage v-if="route.params.id" />
@@ -42,6 +43,7 @@ const remainingItems = computed(() => {
       </template>
     </BaseDisplay>
   </div>
+  </NuxtLayout>
 </template>
 
 <style lang="scss"></style>
